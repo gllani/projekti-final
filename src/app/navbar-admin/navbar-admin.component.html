@@ -1,0 +1,29 @@
+<nav class="navbar navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">Program Menaxhimi!</a>
+    <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbar"
+        aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="navbar-collapse collapse" id="navbar">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+            </li>
+
+
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true"
+                    aria-expanded="false">ADMIN</a>
+                <div class="dropdown-menu" aria-labelledby="dropdown01">
+                    <a class="dropdown-item" href="#" routerLink="app-admin-dashboard" routerLinkActive="active" ariaCurrentWhenActive="page">Dashboard!</a>
+                    <a class="dropdown-item" href="#" routerLink="app-admin-produktet" routerLinkActive="active" ariaCurrentWhenActive="page">Produktet!</a>
+                    <a class="dropdown-item" href="#" routerLink="Logout" routerLinkActive="active" ariaCurrentWhenActive="page">Logout!</a>
+                </div>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+
+<router-outlet></router-outlet>
