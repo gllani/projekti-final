@@ -23,40 +23,28 @@
                   alt="profile"
                 />
               </div>
-  <mat-form-field
-               class="mb-3">
+
+              <div class="mb-3">
                 <input
-                matInput
                   type="text"
                   class="form-control"
                   id="username"
                   aria-describedby="emailHelp"
                   formControlName="username"
-                  placeholder="Username"
-                  minlength="1" [formGroup]="firstFormGroup"
-                  required>
-
- </mat-form-field>
- 
-
-                
-             
-              <div class="mb-3" >
-                <mat-form-field
-                class="mb-3">
-                 <input
-                 matInput
-                   type="password"
-                   class="form-control"
-                   id="password"
-                   formControlName="password"
-                   placeholder="Password"
-                   minlength="4" [formGroup]="firstFormGroup"
-                   required>
- 
-  </mat-form-field>
-
-
+                  placeholder="User Name"
+                  minlength="3"
+                />
+              </div>
+              <div class="mb-3" data-validate="Password is required">
+                <input
+                  type="text"
+                  formControlName="password"
+                  class="form-control"
+                  type="password"
+                  name="pass"
+                  placeholder="Password"
+                  minlength="3"
+                />
                 <tr>
                   <ul></ul>
                 </tr>

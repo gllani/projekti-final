@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FirebaseService } from '../firebase.service';
 
 export interface PeriodicElement {
   name: string;
@@ -38,6 +39,12 @@ export class EmployeerComponent implements OnInit {
   dataSource = [];
   artikujtEZgjedhur: any[] = [];
 
+  constructor(private firebase: FirebaseService) {}
+
+  ngOnInit(): void {}
+
+  
+
   populateTable(produkt: string) {
     this.dataSource = ELEMENT_DATA[produkt];
   }
@@ -69,7 +76,10 @@ export class EmployeerComponent implements OnInit {
       .reduce((name, cmimi) => name + cmimi, 0);
   }
 
-  constructor() {}
+  onLogout(){
 
-  ngOnInit(): void {}
+    this.firebase.signOut();
+
+}
+
 }

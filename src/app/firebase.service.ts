@@ -44,4 +44,8 @@ export class FirebaseService {
   punonjesIRi(item: any) {
     return this.firestore.collection('punonjesit').add(item);
   }
+
+  signOut(){
+    
+  }
 }
