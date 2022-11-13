@@ -1,3 +1,4 @@
+import { query } from '@angular/animations';
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 
@@ -45,7 +46,5 @@ export class FirebaseService {
     return this.firestore.collection('punonjesit').add(item);
   }
 
-  signOut(){
-    
-  }
+  signOut() {}
 }

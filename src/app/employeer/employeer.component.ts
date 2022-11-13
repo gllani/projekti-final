@@ -13,6 +13,16 @@ export class EmployeerComponent implements OnInit {
   dataSource = [];
   artikujtEZgjedhur: any[] = [];
   item: any;
+  updatedItems: any = [];
+  displayedColumnscosttable: string[] = ['item', 'cost'];
+  transactions: any[] = [];
+
+  /** Gets the total cost of all transactions. */
+  getTotalCost() {
+    return this.transactions
+      .map((t) => t.cost)
+      .reduce((acc, value) => parseInt(acc) + parseInt(value), 0);
+  }
 
   constructor(
     private firebase: FirebaseService,
@@ -48,22 +58,35 @@ export class EmployeerComponent implements OnInit {
       };
     });
   }
+  printThisPage() {
+    this.updatedItems.map((item: any) => {
+      this.firebase.ndryshoProdukt(item);
+    });
+  }
 
   populateTable(produkt: string) {
     this.dataSource = this.item[produkt];
   }
 
-  confirm(item: any) {
+  confirm(item: any, items: any[]) {
     let internalItem = {
       name: item.emer,
       Id: item.id,
       price: item.cmimi,
       quantity: item.sasia,
     };
+    let displayItem: any = {
+      item: item.emer,
+      cost: item.cmimi,
+    };
     if (this.artikujtEZgjedhur.length === 0) {
       internalItem.quantity = 1;
       this.artikujtEZgjedhur.push(internalItem);
       item.sasia = parseInt(item.sasia) - 1;
+      console.log('artikujt e zgjedhur bosh');
+
+      this.transactions = [...this.transactions, displayItem];
+      this.updatedItems = [...this.updatedItems, item];
     } else {
       for (var i = 0; i < this.artikujtEZgjedhur.length; i++) {
         if (item.sasia === 0) {
@@ -75,26 +98,30 @@ export class EmployeerComponent implements OnInit {
             this.artikujtEZgjedhur[i].quantity = sasia + 1;
             this.artikujtEZgjedhur[i].price =
               cmimi + parseInt(internalItem.price);
-            item.sasia = parseInt(item.sasia) - 1;
+            let index = this.updatedItems.indexOf(item);
+            this.transactions[
+              this.transactions.findIndex(function (test) {
+                return test.item === internalItem.name;
+              })
+            ].cost = cmimi + parseInt(internalItem.price);
+            this.updatedItems[index].sasia = this.updatedItems[index].sasia - 1;
+            break;
           } else {
-            if (i === this.artikujtEZgjedhur.length -1) {
+            if (i === this.artikujtEZgjedhur.length - 1) {
               console.log(internalItem);
               internalItem.quantity = 1;
+              this.transactions = [...this.transactions, displayItem];
+              this.updatedItems = [...this.updatedItems, item];
               this.artikujtEZgjedhur = [
                 ...this.artikujtEZgjedhur,
                 internalItem,
               ];
+              break;
             }
           }
         }
       }
     }
-  }
-
-  getTotalCost() {
-    return this.artikujtEZgjedhur
-      .map((t) => t.cost)
-      .reduce((name, cmimi) => name + cmimi, 0);
   }
 
   onLogout() {

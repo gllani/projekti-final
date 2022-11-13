@@ -25,6 +25,7 @@ export class LoginComponent {
   title = 'login';
   loginForm!: FormGroup;
   punonjesit: any[] = [];
+  nukEkziston = false;
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -43,7 +44,6 @@ export class LoginComponent {
     });
   }
   onSubmit() {
-    console.log('is callled', this.loginForm.valid);
     if (this.loginForm.valid) {
       this.punonjesit.map((punonjesi: any) => {
         console.log(punonjesi);
@@ -61,9 +61,12 @@ export class LoginComponent {
             this.authService.isAdmin = false;
             this.router.navigate(['employeer']);
           }
+        } else {
+          this.nukEkziston = true
         }
       });
     } else {
+      alert('plotsoni kredencjalet');
     }
   }
 }

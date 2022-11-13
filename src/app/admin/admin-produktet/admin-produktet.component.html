@@ -14,17 +14,19 @@
   <div class="container mt-5 px-2">
     <div class="mb-2 d-flex justify-content-between align-items-center">
       <div class="position-relative">
-        <span class="position-absolute search"
-          ><i class="fa fa-search"></i>
-        </span>
-        <form action="">
-          <input
-            type="search"
-            required
-            class="form-control w-100"
-            placeholder="Search barcode of product"
-          />
-        </form>
+        <span class="position-absolute search"><i class="search"></i> </span>
+        <button>
+          <form [formGroup]="form">
+            <input
+              type="search"
+              required
+              class="form-control w-100"
+              placeholder="Kerko Produkt me ID/Barcode!"
+              formControlName="filter"
+              (input)="filter()"
+            />
+          </form>
+        </button>
       </div>
       <button
         type="button"
@@ -86,11 +88,13 @@
     </div>
 
     <mat-paginator
-      style="display: flex; align-items: flex-start"
-      #paginator
-      [pageSizeOptions]="[2, 4, 6]"
-      showFirstLastButtons
-    ></mat-paginator>
+      [length]="length"
+      [pageSize]="pageSize"
+      [pageSizeOptions]="pageSizeOptions"
+      (page)="pagination($event)"
+      aria-label="Select page"
+    >
+    </mat-paginator>
   </div>
 </div>
 

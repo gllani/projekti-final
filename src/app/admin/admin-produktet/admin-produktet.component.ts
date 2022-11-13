@@ -6,7 +6,7 @@ import {
   FormBuilder,
 } from '@angular/forms';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { MatPaginator } from '@angular/material/paginator';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Route, Router } from '@angular/router';
 import { FormService } from './services/form.service';
@@ -18,24 +18,66 @@ import { FirebaseService } from '../../firebase.service';
   styleUrls: ['./admin-produktet.component.scss'],
 })
 export class AdminProduktetComponent implements OnInit, AfterViewInit {
-
   addProduct: boolean = false;
   editProduct: boolean = false;
   deleteProduct: boolean = false;
   showModal: boolean = false;
   form!: FormGroup;
+  allData: any = [];
   data: any = [];
-
+  searchText: any;
   dataSource = new MatTableDataSource(this.data);
   dataSourceWithPageSize = new MatTableDataSource(this.data);
   @ViewChild('paginator')
   paginator!: MatPaginator;
+  length: any;
+  pageSize = 5;
+  pageSizeOptions: number[] = [5, 10, 15, 20];
+  pageEvent!: PageEvent;
+
+  setPageSizeOptions(setPageSizeOptionsInput: string) {
+    if (setPageSizeOptionsInput) {
+      this.pageSizeOptions = setPageSizeOptionsInput
+        .split(',')
+        .map((str) => +str);
+    }
+  }
 
   constructor(
     private router: Router,
     private fromService: FormService,
     private firebase: FirebaseService
   ) {}
+
+  searchArray = (toSearch: string, array: any[]) => {
+    let terms = toSearch.split(' ');
+    return array.filter((object) =>
+      terms.every((term) =>
+        Object.values(object).some((value: any) =>
+          typeof value === 'string' || value instanceof String
+            ? value.includes(term)
+            : false
+        )
+      )
+    );
+  };
+
+  filter() {
+    this.data = this.searchArray(this.form.value.filter, this.data);
+    if (this.form.value.filter === '') {
+      this.data = this.allData;
+    }
+  }
+
+  pagination(event: any) {
+    console.log(event);
+    console.log(
+      this.data.slice(
+        event.previousPageIndex * event.pageSize,
+        event.pageIndex * event.pageSize
+      )
+    );
+  }
 
   setShowModal(value: boolean, item: any) {
     console.log(item);
@@ -68,12 +110,12 @@ export class AdminProduktetComponent implements OnInit, AfterViewInit {
     };
     this.firebase.getData().subscribe((data: any) => {
       console.log('data nga firebasi', data);
-      this.data = data;
+      this.allData = data;
+      this.data = this.allData;
+      this.length = this.allData.length;
     });
     this.form = new FormGroup({
-      Id: new FormControl('', Validators.required),
-      Emri: new FormControl('', Validators.required),
-      Cmimi: new FormControl('', Validators.required),
+      filter: new FormControl(''),
     });
   }
 
