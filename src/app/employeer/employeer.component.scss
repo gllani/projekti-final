@@ -19,9 +19,17 @@ table {
 
 .card{
     width: 420px;
-    height: 580px;
+    height: 570px;
 }
 .artikuj{
     display: flex;
 }
 
+.position{
+    bottom: 0;
+    position: absolute;
+ 
+}
+.space{
+    margin-bottom: 10px;
+}

@@ -65,11 +65,10 @@ export class FormComponent implements OnInit {
   goToAdd() {
     if (this.llojiINdryshimit === true) {
       let item = this.formService.editableData;
-      this.firebase.updateProduct;
       item.emer = this.form.value.Emri;
       item.cmimi = this.form.value.Cmimi;
       item.sasia = this.form.value.Sasia;
-      this.firebase.updateProduct(item);
+      this.firebase.ndryshoProdukt(item);
 
       this.router.navigate(['/admin-produktet']);
     } else {

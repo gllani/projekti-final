@@ -10,19 +10,28 @@ import { EmployeerComponent } from './employeer/employeer.component';
 import { FooterComponent } from './footer/footer.component';
 import { LoginComponent } from './login/login.component';
 import { NavbarAdminComponent } from './navbar-admin/navbar-admin.component';
+import { GuardService } from '../app/guard.service';
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
-  { path: 'admin', component: AdminComponent },
-  { path: 'navbar-admin', component: NavbarAdminComponent },
+  { path: 'admin', component: AdminComponent, canActivate: [GuardService] },
+  {
+    path: 'navbar-admin',
+    component: NavbarAdminComponent,
+    canActivate: [GuardService],
+  },
   { path: 'admin-punonjes', component: AdminPunonjesComponent },
   { path: 'footer', component: FooterComponent },
   { path: 'admin-dashboard', component: AdminDashboardComponent },
   { path: 'new-punetor', component: NewPunetorComponent },
   { path: 'form', component: FormComponent },
   { path: 'admin-produktet', component: AdminProduktetComponent },
-  { path: 'employeer', component: EmployeerComponent },
-  { path: '**', redirectTo: 'PageNotFound' },
+  {
+    path: 'employeer',
+    component: EmployeerComponent,
+    canActivate: [GuardService],
+  },
+  { path: '**', redirectTo: 'PageNotFound', pathMatch: 'full' },
 ];
 
 @NgModule({

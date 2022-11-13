@@ -9,6 +9,7 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { FirebaseService } from '../firebase.service';
+import { AuthService } from '../auth.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -28,7 +29,8 @@ export class LoginComponent {
   constructor(
     private _formBuilder: FormBuilder,
     private router: Router,
-    private firebase: FirebaseService
+    private firebase: FirebaseService,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -51,8 +53,12 @@ export class LoginComponent {
         ) {
           localStorage.setItem('login', punonjesi);
           if (punonjesi.role === 'admin') {
+            this.authService.isLoggedIn = true;
+            this.authService.isAdmin = true;
             this.router.navigate(['admin']);
           } else {
+            this.authService.isLoggedIn = true;
+            this.authService.isAdmin = false;
             this.router.navigate(['employeer']);
           }
         }

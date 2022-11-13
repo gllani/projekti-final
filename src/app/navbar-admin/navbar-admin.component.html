@@ -1,6 +1,7 @@
 <nav class="navbar navbar-dark bg-dark">
   <a class="navbar-brand" href="#">Program Menaxhimi!</a>
   <button
+    *ngIf="auth.isAdmin"
     class="navbar-toggler collapsed"
     type="button"
     data-toggle="collapse"
@@ -59,6 +60,7 @@
             routerLink="/first-page"
             routerLinkActive="active"
             ariaCurrentWhenActive="page"
+            (click)="onLogout()"
             >Logout!</a
           >
         </div>

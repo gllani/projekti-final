@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 
 @Component({
@@ -7,13 +8,14 @@ import { AuthService } from '../auth.service';
   styleUrls: ['./admin.component.scss'],
 })
 export class AdminComponent implements OnInit {
-  constructor(private auth: AuthService) {}
-  // isLoggedIn() {
-  //   return this.auth.isLoggedIn();
-  // }
-  // logout() {
-  //   this.auth.logout();
-  // }
+  constructor(private auth: AuthService, private route: Router) {}
 
+  logOut() {
+    this.auth.isLoggedIn = false;
+    this.auth.isAdmin = false;
+    localStorage.removeItem('login');
+    localStorage.clear();
+    this.route.navigate(['']);
+  }
   ngOnInit(): void {}
 }
