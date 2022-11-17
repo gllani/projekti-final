@@ -16,6 +16,7 @@ export class DeleteModalComponent implements OnInit {
       id: this.fromService.deleteItem.customIdName,
     };
     this.newItemEvent.emit(action);
+    
   }
 
   constructor(private fromService: FormService) {}

@@ -16,12 +16,16 @@ export class EmployeerComponent implements OnInit {
   updatedItems: any = [];
   displayedColumnscosttable: string[] = ['item', 'cost'];
   transactions: any[] = [];
+  todayDate : Date = new Date();
 
-  /** Gets the total cost of all transactions. */
+  dateVal  =new Date();
+
   getTotalCost() {
     return this.transactions
       .map((t) => t.cost)
       .reduce((acc, value) => parseInt(acc) + parseInt(value), 0);
+      
+
   }
 
   constructor(
@@ -58,10 +62,17 @@ export class EmployeerComponent implements OnInit {
       };
     });
   }
-  printThisPage() {
+  print() {
     this.updatedItems.map((item: any) => {
       this.firebase.ndryshoProdukt(item);
     });
+    var printHtml = document.getElementById('fatura')!.outerHTML;
+    var currentPage = document.body.innerHTML;
+    var elementPage =
+      '<html><head><title></title></head><body>' + printHtml + '</body>';
+    document.body.innerHTML = elementPage;
+    window.print();
+    document.body.innerHTML = currentPage;
   }
 
   populateTable(produkt: string) {

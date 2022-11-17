@@ -1,14 +1,8 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import {
-  FormGroup,
-  FormControl,
-  Validators,
-  FormBuilder,
-} from '@angular/forms';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { FormGroup, FormControl } from '@angular/forms';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { Route, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { FormService } from './services/form.service';
 import { FirebaseService } from '../../firebase.service';
 
@@ -28,20 +22,9 @@ export class AdminProduktetComponent implements OnInit, AfterViewInit {
   searchText: any;
   dataSource = new MatTableDataSource(this.data);
   dataSourceWithPageSize = new MatTableDataSource(this.data);
-  @ViewChild('paginator')
-  paginator!: MatPaginator;
-  length: any;
-  pageSize = 5;
-  pageSizeOptions: number[] = [5, 10, 15, 20];
-  pageEvent!: PageEvent;
 
-  setPageSizeOptions(setPageSizeOptionsInput: string) {
-    if (setPageSizeOptionsInput) {
-      this.pageSizeOptions = setPageSizeOptionsInput
-        .split(',')
-        .map((str) => +str);
-    }
-  }
+
+ 
 
   constructor(
     private router: Router,
@@ -84,7 +67,6 @@ export class AdminProduktetComponent implements OnInit, AfterViewInit {
     this.fromService.deleteItem = item;
     this.showModal = value;
   }
-  pageSizes = [3, 5, 7];
 
   deleteFunction(event: any) {
     if (event.type === 'yes') {
@@ -97,7 +79,6 @@ export class AdminProduktetComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
   }
 
   ngOnInit(): void {
@@ -112,7 +93,6 @@ export class AdminProduktetComponent implements OnInit, AfterViewInit {
       console.log('data nga firebasi', data);
       this.allData = data;
       this.data = this.allData;
-      this.length = this.allData.length;
     });
     this.form = new FormGroup({
       filter: new FormControl(''),
@@ -135,5 +115,6 @@ export class AdminProduktetComponent implements OnInit, AfterViewInit {
     this.editProduct = false;
     this.router.navigate(['form']);
     this.fromService.editableData = item;
+       
   }
 }
